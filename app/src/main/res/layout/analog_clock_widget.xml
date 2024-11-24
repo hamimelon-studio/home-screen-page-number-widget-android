@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Content -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Left Arrow -->
+        <ImageView
+            android:id="@+id/leftArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/analogClock"
+            android:src="@drawable/ic_arrow_left" />
+
+        <!-- Right Arrow -->
+        <ImageView
+            android:id="@+id/rightArrow"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/analogClock"
+            android:src="@drawable/ic_arrow_right" />
+
+        <!-- Previous Page Icon -->
+        <ImageView
+            android:id="@+id/prevPageIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:layout_toStartOf="@+id/analogClock"
+            android:src="@drawable/ic_steering_wheel" />
+
+        <!-- Next Page Icon -->
+        <ImageView
+            android:id="@+id/nextPageIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="2dp"
+            android:layout_toEndOf="@+id/analogClock"
+            android:src="@drawable/ic_home" />
+
+        <!-- Analog Clock -->
+        <AnalogClock
+            android:id="@+id/analogClock"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="top|center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/pageNumber"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_bg"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/pageIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="2dp"
+            android:src="@drawable/ic_home" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:fontFamily="sans-serif-medium"
+        android:text="Tue Nov 23"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp" />
+</FrameLayout>
