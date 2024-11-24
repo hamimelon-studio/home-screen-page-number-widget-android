@@ -18,12 +18,11 @@ import com.mike.widgetind.R
 import com.mike.widgetind.ui.about.AboutScreen
 import com.mike.widgetind.ui.about.AuthorGithubWebScreen
 import com.mike.widgetind.ui.home.HomeScreen
-import com.mike.widgetind.ui.home.SteamWebScreen
-import com.mike.widgetind.ui.theme.SteamObTheme
+import com.mike.widgetind.ui.theme.WidgetIndTheme
 
 @Composable
-fun SteamAppNav() {
-    SteamObTheme {
+fun WidgetIndNav() {
+    WidgetIndTheme {
         val navController = rememberNavController()
         Scaffold(
             bottomBar = { BottomNavBar(navController) }
@@ -33,10 +32,6 @@ fun SteamAppNav() {
                 startDestination = "home"
             ) {
                 composable("home") { HomeScreen(navController, innerPadding) }
-                composable("steam/{appId}") { backStackEntry ->
-                    val url = backStackEntry.arguments?.getString("appId") ?: ""
-                    SteamWebScreen(url, innerPadding)
-                }
                 composable("about") { AboutScreen(navController, innerPadding) }
                 composable("github/{url}/{scrollY}") { backStackEntry ->
                     val url = backStackEntry.arguments?.getString("url") ?: ""

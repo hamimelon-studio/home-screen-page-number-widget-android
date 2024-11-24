@@ -4,23 +4,18 @@ import android.content.Context
 import com.mike.widgetind.data.room.WidgetIndicatorDao
 import com.mike.widgetind.data.room.WidgetIndicatorEntity
 import com.mike.widgetind.ui.home.UiState
-import kotlin.math.roundToInt
 
 class WidgetIndicatorRepository(
     private val appContext: Context,
     private val dao: WidgetIndicatorDao
 ) {
-    suspend fun fetchApp(input: WidgetIndicatorEntity): WidgetIndicatorEntity? {
-        return null
+    suspend fun getWidgetIndEntity(widgetId: Int): WidgetIndicatorEntity? {
+        return dao.getWidgetInfo(widgetId)
     }
 
-    suspend fun getSteamObEntity(widgetId: Int): WidgetIndicatorEntity? {
-        return dao.getObApps(widgetId)
-    }
-
-    suspend fun getSteamObEntities(): UiState {
+    suspend fun getWidgetIndEntities(): UiState {
         return UiState(
-            dao.getAllObApps()
+            dao.getAll()
         )
     }
 
@@ -29,14 +24,6 @@ class WidgetIndicatorRepository(
     }
 
     suspend fun delete(widgetId: Int) {
-        dao.removeObApp(widgetId)
-    }
-
-    private fun adjustDiscountValue(discountGiven: Int, initialPrice: Long, finalPrice: Long): Int {
-        if (discountGiven > 0) {
-            return discountGiven
-        }
-        val adjusted = (initialPrice - finalPrice) * 1.0f / initialPrice * 100.0f
-        return adjusted.roundToInt()
+        dao.removeWidgetInfo(widgetId)
     }
 }

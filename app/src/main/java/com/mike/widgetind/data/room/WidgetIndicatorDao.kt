@@ -7,18 +7,18 @@ import androidx.room.Query
 
 @Dao
 interface WidgetIndicatorDao {
-    @Query("SELECT * FROM steam_ob WHERE widgetId = :widgetId")
-    suspend fun getObApps(widgetId: Int): WidgetIndicatorEntity?
-    
+    @Query("SELECT * FROM widget_info WHERE widgetId = :widgetId")
+    suspend fun getWidgetInfo(widgetId: Int): WidgetIndicatorEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(widgetIndicatorEntity: WidgetIndicatorEntity)
 
-    @Query("DELETE FROM steam_ob WHERE widgetId = :widgetId")
-    suspend fun removeObApp(widgetId: Int)
+    @Query("DELETE FROM widget_info WHERE widgetId = :widgetId")
+    suspend fun removeWidgetInfo(widgetId: Int)
 
-    @Query("DELETE FROM steam_ob")
+    @Query("DELETE FROM widget_info")
     suspend fun clear()
 
-    @Query("SELECT * FROM steam_ob")
-    suspend fun getAllObApps(): List<WidgetIndicatorEntity>
+    @Query("SELECT * FROM widget_info")
+    suspend fun getAll(): List<WidgetIndicatorEntity>
 }

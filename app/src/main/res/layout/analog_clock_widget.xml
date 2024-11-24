@@ -34,7 +34,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="2dp"
             android:layout_toStartOf="@+id/analogClock"
-            android:src="@drawable/ic_steering_wheel" />
+            android:src="@drawable/ic_car" />
 
         <!-- Next Page Icon -->
         <ImageView

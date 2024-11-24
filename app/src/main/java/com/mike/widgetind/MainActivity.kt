@@ -1,12 +1,14 @@
 package com.mike.widgetind
 
+import android.app.ComponentCaller
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.mike.widgetind.ui.SteamAppNav
+import com.mike.widgetind.ui.WidgetIndNav
 import com.mike.widgetind.ui.extension.adaptEdgeToEdge
 
 class MainActivity : ComponentActivity() {
@@ -15,8 +17,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         adaptEdgeToEdge(window.decorView)
         setContent {
-            SteamAppNav()
+            WidgetIndNav()
         }
+        finish()
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?,
+        caller: ComponentCaller
+    ) {
+        super.onActivityResult(requestCode, resultCode, data, caller)
+        Log.d("bbbb", "requestCode: $requestCode, resultCode: $resultCode")
     }
 
     companion object {

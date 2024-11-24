@@ -33,9 +33,7 @@ google-services.json
 *.hprof
 
 # from AS
-*.iml
 .gradle
-
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -48,5 +46,4 @@ google-services.json
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 /app/release

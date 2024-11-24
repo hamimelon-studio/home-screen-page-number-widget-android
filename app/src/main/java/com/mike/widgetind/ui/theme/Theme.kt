@@ -8,34 +8,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val CyberpunkDarkColorScheme = darkColorScheme(
-    primary = NeonPurple,
-    secondary = NeonBlue,
-    tertiary = NeonPink,
+    primary = NeonBlue,
+    secondary = NeonPink,
+    tertiary = NeonGreen,
     background = DarkBackground,
-    surface = CyberGray,
-    onPrimary = NeonGreen,
-    onSecondary = BrightAccent,
-    onTertiary = Color.White,
-    onBackground = NeonGreen,
-    onSurface = Color.White
+    surface = DialogSurface,          // Changed to darker surface
+    surfaceVariant = DialogBackground, // Added for dialog background
+    onSurfaceVariant = Color.White,   // For content on dialog background
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onTertiary = Color.Black,
+    onBackground = NeonBlue,
+    onSurface = Color.White,
+    surfaceTint = Color.White,        // Added for better dialog appearance
+    scrim = Color(0xFF0A0A0F)         // Added for dialog overlay
 )
 
 private val CyberpunkLightColorScheme = lightColorScheme(
+    // Keep light theme the same as before
     primary = NeonBlue,
-    secondary = NeonPink,
-    tertiary = BrightAccent,
-    background = Color(0xFFF0F0F0),
+    secondary = NeonPurple,
+    tertiary = NeonPink,
+    background = Color(0xFFF2F2F7),
     surface = Color.White,
-    onPrimary = NeonPurple,
-    onSecondary = NeonGreen,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
     onTertiary = CyberGray,
-    onBackground = DarkBackground,
+    onBackground = CyberGray,
     onSurface = CyberGray
 )
 
-
 @Composable
-fun SteamObTheme(
+fun WidgetIndTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit

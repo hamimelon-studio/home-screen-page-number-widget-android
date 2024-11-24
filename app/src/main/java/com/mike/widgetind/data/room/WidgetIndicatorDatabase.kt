@@ -10,5 +10,5 @@ import androidx.room.RoomDatabase
 )
 abstract class WidgetIndicatorDatabase : RoomDatabase() {
 
-    abstract fun steamObDao(): WidgetIndicatorDao
+    abstract fun widgetIndDao(): WidgetIndicatorDao
 }

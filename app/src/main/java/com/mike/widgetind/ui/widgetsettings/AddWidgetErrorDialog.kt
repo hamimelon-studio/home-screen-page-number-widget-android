@@ -1,4 +1,4 @@
-package com.mike.widgetind.ui.addwidget
+package com.mike.widgetind.ui.widgetsettings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

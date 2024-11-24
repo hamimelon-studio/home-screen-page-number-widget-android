@@ -27,7 +27,7 @@ class HomeViewModel(
         viewModelScope.launch {
             try {
                 isRefresh.value = true
-                uiState.value = repository.getSteamObEntities()
+                uiState.value = repository.getWidgetIndEntities()
             } catch (e: Exception) {
                 Log.d("bbbb", "Exception: $e")
                 e.printStackTrace()

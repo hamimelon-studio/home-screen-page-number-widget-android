@@ -126,14 +126,13 @@ private fun GamesList(
     ) {
         items(
             items = games,
-            key = { it.appId }
+            key = { it.widgetId }
         ) { appInfo ->
             GameCard(navController, appInfo)
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun GameCard(
     navController: NavController,

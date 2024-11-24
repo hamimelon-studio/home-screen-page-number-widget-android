@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mike.widgetind.R
@@ -33,7 +34,7 @@ fun EmptyScreen() {
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
-                imageVector = Icons.Default.AccountCircle,
+                painter = painterResource(id = R.drawable.ic_widgets_24),
                 contentDescription = null,
                 modifier = Modifier
                     .size(48.dp)
