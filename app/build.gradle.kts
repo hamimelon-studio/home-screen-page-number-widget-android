@@ -8,15 +8,15 @@ plugins {
 }
 
 android {
-    namespace = "com.mike.widgetind"
+    namespace = "com.melonapp.widgetind"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.mike.widgetind"
+        applicationId = "com.melonapp.widgetind"
         minSdk = 28
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 10000
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -25,7 +25,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
         release {
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -74,6 +79,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.coil.compose)
     implementation(libs.androidx.cardview)
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
 
     // di
     implementation(libs.koin.android)

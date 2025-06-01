@@ -4,7 +4,7 @@
     android:initialLayout="@layout/number_widget"
     android:minWidth="40dp"
     android:minHeight="40dp"
-    android:configure="com.mike.widgetind.ui.widgetsettings.WidgetSettingsActivity"
+    android:configure="com.melonapp.widgetind.ui.widgetsettings.WidgetSettingsActivity"
     android:updatePeriodMillis="0"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen" />
