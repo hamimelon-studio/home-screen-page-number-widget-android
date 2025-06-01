@@ -85,13 +85,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
-    // network
-    implementation(libs.retrofit.v290)
-    implementation(libs.retrofit2.converter.gson)
-    implementation(libs.gson)
-    implementation(libs.okhttp3.logging.interceptor)
-    implementation(libs.okhttp3.okhttp)
-
     // For testing (optional)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
