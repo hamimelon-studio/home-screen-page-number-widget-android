@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -79,16 +80,42 @@ fun WidgetSettingsScreen(
     val icons = listOf(
         R.drawable.ic_home,
         R.drawable.ic_car,
+        R.drawable.ic_train_24,
+        R.drawable.ic_bus_24,
+        R.drawable.ic_airplane_24,
+        R.drawable.ic_work_24,
+        R.drawable.ic_bike_24,
         R.drawable.ic_directions_run_24,
         R.drawable.ic_sailing_24,
+        R.drawable.ic_sports_score_24,
+        R.drawable.ic_motorsports_24,
+        R.drawable.ic_sports_soccer_24,
+        R.drawable.ic_sports_football_24,
+        R.drawable.ic_sports_basketball_24,
+        R.drawable.ic_sports_tennis_24,
         R.drawable.ic_shopping_cart_24,
         R.drawable.ic_sports_esports_24,
         R.drawable.ic_temple_buddhist_24,
-        R.drawable.ic_train_24,
-        R.drawable.ic_work_24
+        R.drawable.ic_live_tv_24,
+        R.drawable.ic_build_24,
+        R.drawable.ic_castle_24,
+        R.drawable.ic_restaurant_24,
+        R.drawable.ic_beer_bar_24,
+        R.drawable.ic_forest_24,
+        R.drawable.ic_fitness_center_24,
+        R.drawable.ic_music_note_24,
+        R.drawable.ic_family_restroom_24,
+        R.drawable.ic_local_parking_24,
+        R.drawable.ic_bookmark_border_24,
+        R.drawable.ic_brightness_moon_24,
+        R.drawable.ic_attach_money_24,
+        R.drawable.ic_medication_24,
+        R.drawable.ic_headset_mic_24,
+        R.drawable.ic_android_24,
+        R.drawable.ic_school_24
     )
-    var selectedPage by remember { mutableStateOf(pageNumber) }
-    var selectedIconIndex by remember { mutableStateOf(iconRes) }
+    var selectedPage by remember { mutableIntStateOf(pageNumber) }
+    var selectedIconIndex by remember { mutableIntStateOf(iconRes) }
 
     Column(
         modifier = Modifier
