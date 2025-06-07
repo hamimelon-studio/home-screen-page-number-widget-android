@@ -26,4 +26,15 @@ class WidgetIndicatorRepository(
     suspend fun delete(widgetId: Int) {
         dao.removeWidgetInfo(widgetId)
     }
+
+    suspend fun getAllEmptyEntitiesByTimeStampDesc(): UiState {
+        return UiState(
+            dao.getAll()
+                .filter {
+                    it.lastUpdate > 0L
+                }.sortedByDescending {
+                    it.lastUpdate
+                }
+        )
+    }
 }

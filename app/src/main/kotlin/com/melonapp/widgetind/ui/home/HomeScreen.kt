@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.navigation.NavController
 import com.melonapp.widgetind.R
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -47,12 +48,13 @@ import org.koin.androidx.compose.koinViewModel
     ExperimentalLayoutApi::class
 )
 @Composable
-fun HomeScreen(navController: NavController, innerPadding: PaddingValues) {
+fun HomeScreen(innerPadding: PaddingValues) {
     val viewModel: HomeViewModel = koinViewModel()
     val isRefresh = viewModel.isRefresh.collectAsState().value
     val uiState = viewModel.uiState.collectAsState().value
     val scope = rememberCoroutineScope()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val applicationContext = LocalContext.current.applicationContext
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -95,9 +97,15 @@ fun HomeScreen(navController: NavController, innerPadding: PaddingValues) {
                 }, label = ""
             ) { hasContent ->
                 if (!hasContent) {
-                    EmptyScreen()
+                    EmptyScreen {
+                        viewModel.requestPinWidget(applicationContext)
+                    }
                 } else {
-                    Column(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
                         HeaderSection()
                         Spacer(modifier = Modifier.height(8.dp))
                         Box(
@@ -117,6 +125,10 @@ fun HomeScreen(navController: NavController, innerPadding: PaddingValues) {
                                     ) { widgetId ->
                                         viewModel.launchConfigWidgetInputActivity(widgetId)
                                     }
+                                }
+
+                                AddNewPageCell {
+                                    viewModel.requestPinWidget(applicationContext)
                                 }
                             }
                         }

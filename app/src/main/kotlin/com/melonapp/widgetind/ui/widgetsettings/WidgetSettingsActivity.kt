@@ -7,24 +7,14 @@ import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import com.melonapp.widgetind.R
-import com.melonapp.widgetind.data.WidgetIndicatorRepository
 import com.melonapp.widgetind.ui.theme.WidgetIndTheme
 import com.melonapp.widgetind.widget.PageWidgetProvider
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import org.koin.androidx.compose.koinViewModel
-import org.koin.java.KoinJavaComponent.get
 
 class WidgetSettingsActivity : ComponentActivity() {
-    private val repository: WidgetIndicatorRepository = get(WidgetIndicatorRepository::class.java)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,32 +22,30 @@ class WidgetSettingsActivity : ComponentActivity() {
             AppWidgetManager.EXTRA_APPWIDGET_ID,
             AppWidgetManager.INVALID_APPWIDGET_ID
         )
-        val entity = runBlocking {
-            withContext(IO) {
-                repository.getWidgetIndEntity(widgetId)
-            }
-        }
         setContent {
             WidgetIndTheme {
-                var showDialog by remember { mutableStateOf(true) }
                 val viewModel: WidgetSettingsViewModel = koinViewModel()
+                val uiState = viewModel.uiState.collectAsState(WidgetSettingsUiState.Idle)
+                LaunchedEffect(widgetId, intent.action) {
+                    viewModel.load(widgetId, intent.action) {
+                        finish()
+                    }
+                }
 
-                if (showDialog) {
+                if (uiState.value is WidgetSettingsUiState.InputDialog) {
+                    val uiStateCast = uiState.value as WidgetSettingsUiState.InputDialog
                     AddWidgetDialog(
-                        pageNumber = entity?.pageNumber ?: 1,
-                        iconRes = entity?.iconRes ?: R.drawable.ic_home,
-                        showDialog = showDialog,
+                        widgetId = uiStateCast.widgetId,
+                        pageNumber = uiStateCast.pageNumber,
+                        iconRes = uiStateCast.iconRes,
+                        showDialog = true,
                         onDismiss = {
-                            showDialog = false
                             setResult(RESULT_CANCELED)
                             finish()
                         },
-                        onConfirm = { selectedPage, selectedIcon ->
-                            // Handle confirm logic here
-                            showDialog = false
-
-                            viewModel.save(widgetId, selectedPage, selectedIcon)
-                            updateWidget(widgetId)
+                        onConfirm = { actualWidgetId, selectedPage, selectedIcon ->
+                            viewModel.save(actualWidgetId, selectedPage, selectedIcon)
+                            updateWidget(actualWidgetId)
 
                             val resultValue = Intent().apply {
                                 putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)

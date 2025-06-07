@@ -7,24 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import com.melonapp.widgetind.R
-import com.melonapp.widgetind.data.WidgetIndicatorRepository
+import com.melonapp.widgetind.ui.widgetsettings.CustomisedIntentConstant.ACTION_WIDGET_CLICK_CONFIG_ENTRY
 import com.melonapp.widgetind.ui.widgetsettings.WidgetSettingsActivity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent.get
 
 
 class PageWidgetProvider : AppWidgetProvider() {
-    companion object {
-        const val ACTION_WIDGET_CONFIGURE = "com.your.package.ACTION_WIDGET_CONFIGURE"
-    }
-
-    private val repository: WidgetIndicatorRepository = get(WidgetIndicatorRepository::class.java)
-    private val job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
+    private val useCase: PageWidgetProviderUseCase = get(PageWidgetProviderUseCase::class.java)
 
     override fun onUpdate(
         context: Context,
@@ -32,6 +21,7 @@ class PageWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         appWidgetIds.forEach { appWidgetId ->
+            useCase.saveWidgetIfNewCreated(appWidgetId)
             updateWidget(context, appWidgetManager, appWidgetId)
         }
     }
@@ -45,7 +35,7 @@ class PageWidgetProvider : AppWidgetProvider() {
 
         // Create the configuration intent
         val configIntent = Intent(context, WidgetSettingsActivity::class.java).apply {
-            action = ACTION_WIDGET_CONFIGURE
+            action = ACTION_WIDGET_CLICK_CONFIG_ENTRY
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
@@ -60,8 +50,7 @@ class PageWidgetProvider : AppWidgetProvider() {
         // Register the configuration intent
         views.setOnClickPendingIntent(R.id.frame, configPendingIntent)
 
-        coroutineScope.launch {
-            val widgetInfo = repository.getWidgetIndEntity(appWidgetId)
+        useCase.asyncFetchEntityByWidgetId(appWidgetId) { widgetInfo ->
             widgetInfo?.let {
                 views.setTextViewText(R.id.pageNumber, widgetInfo.pageNumber.toString())
                 views.setImageViewResource(R.id.pageIcon, widgetInfo.iconRes)
@@ -71,11 +60,7 @@ class PageWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
-        coroutineScope.launch(IO) {
-            appWidgetIds?.forEach {
-                repository.delete(it)
-            }
-        }
+        useCase.deleteWidgets(appWidgetIds?.toList() ?: emptyList())
         super.onDeleted(context, appWidgetIds)
     }
 }

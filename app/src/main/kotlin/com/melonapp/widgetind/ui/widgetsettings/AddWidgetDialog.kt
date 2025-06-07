@@ -38,11 +38,12 @@ import com.melonapp.widgetind.ui.widgetsettings.IconFlowPicker
 
 @Composable
 fun AddWidgetDialog(
+    widgetId: Int,
     pageNumber: Int,
     iconRes: Int,
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirm: (Int, Int) -> Unit
+    onConfirm: (Int, Int, Int) -> Unit
 ) {
     if (showDialog) {
         Dialog(
@@ -57,10 +58,11 @@ fun AddWidgetDialog(
                 color = MaterialTheme.colorScheme.background
             ) {
                 WidgetSettingsScreen(
+                    widgetId,
                     pageNumber,
                     iconRes,
-                    onConfirm = { selectedPage, selectedIcon ->
-                        onConfirm(selectedPage, selectedIcon)
+                    onConfirm = { widgetId, selectedPage, selectedIcon ->
+                        onConfirm(widgetId, selectedPage, selectedIcon)
                         onDismiss()
                     },
                     onCancel = onDismiss
@@ -72,9 +74,10 @@ fun AddWidgetDialog(
 
 @Composable
 fun WidgetSettingsScreen(
+    widgetId: Int,
     pageNumber: Int,
     iconRes: Int,
-    onConfirm: (Int, Int) -> Unit,
+    onConfirm: (Int, Int, Int) -> Unit,
     onCancel: () -> Unit
 ) {
     val icons = listOf(
@@ -147,7 +150,7 @@ fun WidgetSettingsScreen(
 
         // Confirm and Cancel buttons
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = { onConfirm(selectedPage, selectedIconIndex) }) {
+            Button(onClick = { onConfirm(widgetId, selectedPage, selectedIconIndex) }) {
                 Text("Confirm")
             }
             OutlinedButton(onClick = onCancel) {

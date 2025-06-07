@@ -9,5 +9,6 @@ data class WidgetIndicatorEntity(
     @PrimaryKey
     val widgetId: Int,
     val pageNumber: Int = 1,
-    val iconRes: Int = R.drawable.ic_home
+    val iconRes: Int = R.drawable.ic_home,
+    val lastUpdate: Long = 0L
 )

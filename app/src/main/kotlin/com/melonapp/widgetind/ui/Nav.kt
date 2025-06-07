@@ -31,7 +31,7 @@ fun WidgetIndNav() {
                 navController = navController,
                 startDestination = "home"
             ) {
-                composable("home") { HomeScreen(navController, innerPadding) }
+                composable("home") { HomeScreen(innerPadding) }
                 composable("about") { AboutScreen(navController, innerPadding) }
                 composable("github/{url}/{scrollY}") { backStackEntry ->
                     val url = backStackEntry.arguments?.getString("url") ?: ""
