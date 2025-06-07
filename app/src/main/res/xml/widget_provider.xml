@@ -7,4 +7,5 @@
     android:configure="com.melonapp.widgetind.ui.widgetsettings.WidgetSettingsActivity"
     android:updatePeriodMillis="0"
     android:resizeMode="horizontal|vertical"
+    android:previewImage="@drawable/widget_preview"
     android:widgetCategory="home_screen" />
